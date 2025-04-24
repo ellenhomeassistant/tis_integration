@@ -1,4 +1,3 @@
-#init
 from __future__ import annotations
 from TISControlProtocol import *
 import logging,os

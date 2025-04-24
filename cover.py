@@ -22,10 +22,14 @@ from.import TISConfigEntry
 handler=TISProtocolHandler()
 async def async_setup_entry(hass,entry,async_add_devices):
     I=alpha__("Z2F0ZXdheQ==");H=alpha__("ZGV2aWNlX2lk");E=async_add_devices;D=alpha__("Y2hhbm5lbHM=");A=entry.runtime_data.api;F=await A.get_entities(platform=alpha__("bW90b3I="));G=await A.get_entities(platform=alpha__("c2h1dHRlcg=="))
-    if F:B=[(B,next(iter(A[D][0].values())),A[H],A[I],A[alpha__("c2V0dGluZ3M=")])for A in F for(B,A)in A.items()];C=[TISCoverWPos(tis_api=A,cover_name=B,channel_number=C,device_id=D,gateway=E,settings=json.loads(F))for(B,C,D,E,F)in B];E(C,update_before_add=_B)
+    if F:B=[(B,next(iter(A[D][0].values())),A[H],A[I],A[alpha__("c2V0dGluZ3M=")])for A in F for(B,A)in A.items()];C=[TISCoverWPos(tis_api=A,cover_name=B,channel_number=C,device_id=D,gateway=E,settings=F)for(B,C,D,E,F)in B];E(C,update_before_add=_B)
     if G:B=[(B,next(iter(A[D][0].values())),next(iter(A[D][1].values())),A[H],A[I])for A in G for(B,A)in A.items()];C=[TISCoverNoPos(tis_api=A,cover_name=B,up_channel_number=C,down_channel_number=D,device_id=E,gateway=F)for(B,C,D,E,F)in B];E(C,update_before_add=_B)
 class TISCoverWPos(CoverEntity):
-    def __init__(A,tis_api,gateway,cover_name,channel_number,device_id,settings):A.exchange_command=settings[alpha__("ZXhjaGFuZ2VfY29tbWFuZA==")];A.api=tis_api;A.gateway=gateway;A.device_id=device_id;A.channel_number=int(channel_number);A._attr_name=cover_name;A._attr_is_closed=_A;A._attr_current_cover_position=_A;A._attr_device_class=CoverDeviceClass.SHUTTER;A._attr_unique_id=beta__("e19fdmFyMH1fe19fdmFyMX0=", __var0=A._attr_name, __var1=A.channel_number);A.listener=_A;A.update_packet=handler.generate_control_update_packet(A);A.generate_cover_packet=handler.generate_light_control_packet
+    def __init__(A,tis_api,gateway,cover_name,channel_number,device_id,settings):
+        B=settings
+        if B:B=json.loads(B);A.exchange_command=B[alpha__("ZXhjaGFuZ2VfY29tbWFuZA==")]
+        else:A.exchange_command=alpha__("MA==")
+        A.api=tis_api;A.gateway=gateway;A.device_id=device_id;A.channel_number=int(channel_number);A._attr_name=cover_name;A._attr_is_closed=_A;A._attr_current_cover_position=_A;A._attr_device_class=CoverDeviceClass.SHUTTER;A._attr_unique_id=beta__("e19fdmFyMH1fe19fdmFyMX0=", __var0=A._attr_name, __var1=A.channel_number);A.listener=_A;A.update_packet=handler.generate_control_update_packet(A);A.generate_cover_packet=handler.generate_light_control_packet
     async def async_added_to_hass(A):
         @callback
         async def B(event):
