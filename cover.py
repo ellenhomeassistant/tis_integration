@@ -1,4 +1,4 @@
-from __future__ import annotations # test
+from __future__ import annotations
 from TISControlProtocol import *
 _G=alpha__("Y2hhbm5lbF9udW1iZXI=")
 _F=alpha__("Y29udHJvbF9yZXNwb25zZQ==")
