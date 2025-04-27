@@ -33,24 +33,20 @@ class TISCoverWPos(CoverEntity):
     async def async_added_to_hass(A):
         @callback
         async def B(event):
-            B=event
-            if B.event_type==str(A.device_id):
-                if B.data[_D]==_F:
-                    logging.info(beta__("Y2hhbm5lbCBudW1iZXIgZm9yIGNvdmVyOiB7X192YXIwfQ==", __var0=A.channel_number));D=B.data[_E][2];E=B.data[_G]
+            C=event
+            if C.event_type==str(A.device_id):
+                if C.data[_D]==_F:
+                    logging.info(beta__("Y2hhbm5lbCBudW1iZXIgZm9yIGNvdmVyOiB7X192YXIwfQ==", __var0=A.channel_number));D=C.data[_E][2];E=C.data[_G]
                     if int(E)==A.channel_number:
-                        C=D
-                        if A.exchange_command==alpha__("MQ=="):C=100-C
-                        A._attr_is_closed=C==0;A._attr_current_cover_position=C
+                        B=D
+                        if A.exchange_command==alpha__("MQ=="):B=100-B
+                        A._attr_is_closed=B==0;A._attr_current_cover_position=B
                     A.async_write_ha_state()
-                elif B.data[_D]==alpha__("YmluYXJ5X2ZlZWRiYWNr"):
-                    F=ceil(B.data[_E][0]/8);G=alpha__("").join(int_to_8_bit_binary(B.data[_E][A])for A in range(1,F+1))
-                    if G[A.channel_number-1]==alpha__("MA=="):A._attr_is_closed=_B
-                    A.async_write_ha_state()
-                elif B.data[_D]==alpha__("dXBkYXRlX3Jlc3BvbnNl"):
-                    H=B.data[_E];C=H[A.channel_number]
-                    if A.exchange_command==alpha__("MQ=="):C=100-C
-                    A._attr_current_cover_position=C;A._attr_is_closed=A._attr_current_cover_position==0;A._attr_state=STATE_CLOSING if A._attr_is_closed else STATE_OPENING
-                elif B.data[_D]==alpha__("b2ZmbGluZV9kZXZpY2U="):A._attr_state=STATE_UNKNOWN;A._attr_is_closed=_A;A._attr_current_cover_position=_A
+                elif C.data[_D]==alpha__("dXBkYXRlX3Jlc3BvbnNl"):
+                    F=C.data[_E];B=F[A.channel_number]
+                    if A.exchange_command==alpha__("MQ=="):B=100-B
+                    A._attr_current_cover_position=B;A._attr_is_closed=A._attr_current_cover_position==0;A._attr_state=STATE_CLOSING if A._attr_is_closed else STATE_OPENING
+                elif C.data[_D]==alpha__("b2ZmbGluZV9kZXZpY2U="):A._attr_state=STATE_UNKNOWN;A._attr_is_closed=_A;A._attr_current_cover_position=_A
             await A.async_update_ha_state(_B)
         A.listener=A.hass.bus.async_listen(str(A.device_id),B);C=await A.api.protocol.sender.send_packet(A.update_packet)
     def _convert_position(B,position):
@@ -69,17 +65,17 @@ class TISCoverWPos(CoverEntity):
     def unique_id(self):return self._attr_unique_id
     async def async_open_cover(A,**E):
         B=A._convert_position(100);C=A.generate_cover_packet(A,B);D=await A.api.protocol.sender.send_packet_with_ack(C)
-        if D:A._attr_is_closed=A.exchange_command==alpha__("MQ==");A._attr_current_cover_position=B
+        if D:A._attr_is_closed=_C;A._attr_current_cover_position=100
         else:A._attr_is_closed=_A;A._attr_current_cover_position=_A
         A.async_write_ha_state()
     async def async_close_cover(A,**E):
         B=A._convert_position(0);C=A.generate_cover_packet(A,B);D=await A.api.protocol.sender.send_packet_with_ack(C)
-        if D:A._attr_is_closed=A.exchange_command!=alpha__("MQ==");A._attr_current_cover_position=B
-        else:A._attr_is_closed=_C;A._attr_current_cover_position=_A
+        if D:A._attr_is_closed=_B;A._attr_current_cover_position=0
+        else:A._attr_is_closed=_A;A._attr_current_cover_position=_A
         A.async_write_ha_state()
     async def async_set_cover_position(A,**D):
-        B=D[ATTR_POSITION];C=A._convert_position(B);E=A.generate_cover_packet(A,C);F=await A.api.protocol.sender.send_packet_with_ack(E)
-        if F:A._attr_is_closed=B==100 if A.exchange_command==alpha__("MQ==")else B==0;A._attr_current_cover_position=C
+        C=D[ATTR_POSITION];B=A._convert_position(C);E=A.generate_cover_packet(A,B);F=await A.api.protocol.sender.send_packet_with_ack(E)
+        if F:A._attr_is_closed=B==0 if A.exchange_command==alpha__("MA==")else B==100;A._attr_current_cover_position=C
         else:A._attr_is_closed=_A;A._attr_current_cover_position=_A
         A.async_write_ha_state()
 class TISCoverNoPos(CoverEntity):
