@@ -75,7 +75,7 @@ class TISCoverWPos(CoverEntity):
         A.async_write_ha_state()
     async def async_set_cover_position(A,**D):
         C=D[ATTR_POSITION];B=A._convert_position(C);E=A.generate_cover_packet(A,B);F=await A.api.protocol.sender.send_packet_with_ack(E)
-        if F:A._attr_is_closed=B==0 if A.exchange_command==alpha__("MA==")else B==100;A._attr_current_cover_position=C
+        if F:A._attr_is_closed=B<=20 if A.exchange_command==alpha__("MA==")else B>=80;A._attr_current_cover_position=C
         else:A._attr_is_closed=_A;A._attr_current_cover_position=_A
         A.async_write_ha_state()
 class TISCoverNoPos(CoverEntity):
