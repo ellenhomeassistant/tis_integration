@@ -25,7 +25,7 @@ async def async_setup_entry(hass,entry,async_add_devices):
         except Exception as E:logging.error(beta__("ZXJyb3IgaGFwcGVuZWQgY3JlYXRpbmcgZW50aXRpZXMgZToge19fdmFyMH0=", __var0=E))
 protocol_handler=TISProtocolHandler()
 class TISSwitch(SwitchEntity):
-    def __init__(A,tis_api,switch_name,channel_number,device_id,gateway):B=switch_name;A.api=tis_api;A._name=B;A._attr_unique_id=beta__("c3dpdGNoX3tfX3ZhcjB9", __var0=A.name);A._state=STATE_UNKNOWN;A._attr_is_on=None;A.name=B;A.device_id=device_id;A.gateway=gateway;A.channel_number=int(channel_number);A.listener=None;A.on_packet=protocol_handler.generate_control_on_packet(A);A.off_packet=protocol_handler.generate_control_off_packet(A);A.update_packet=protocol_handler.generate_control_update_packet(A)
+    def __init__(A,tis_api,switch_name,channel_number,device_id,gateway):B=switch_name;A.api=tis_api;A._name=B;A._attr_unique_id=beta__("c3dpdGNoX3tfX3ZhcjB9", __var0=A.name);A._state=STATE_UNKNOWN;A._attr_is_on=None;A.name=B;A.device_id=device_id;A.gateway=gateway;A.channel_number=int(channel_number);A.listener=None;A.broadcast_channel=255;A.on_packet=protocol_handler.generate_control_on_packet(A);A.off_packet=protocol_handler.generate_control_off_packet(A);A.update_packet=protocol_handler.generate_control_update_packet(A)
     async def async_added_to_hass(A):
         @callback
         async def B(event):
@@ -34,8 +34,9 @@ class TISSwitch(SwitchEntity):
                 if B.data[_A]==alpha__("Y29udHJvbF9yZXNwb25zZQ=="):
                     D=B.data[C][2];E=B.data[_B]
                     if int(E)==A.channel_number:A._state=STATE_ON if int(D)==100 else STATE_OFF
-                elif B.data[_A]==alpha__("YmluYXJ5X2ZlZWRiYWNr"):F=ceil(B.data[C][0]/8);G=alpha__("").join(int_to_8_bit_binary(B.data[C][A])for A in range(1,F+1));A._state=STATE_ON if G[A.channel_number-1]==alpha__("MQ==")else STATE_OFF
-                elif B.data[_A]==alpha__("dXBkYXRlX3Jlc3BvbnNl"):H=B.data[C];I=int(H[A.channel_number]);A._state=STATE_ON if I>0 else STATE_OFF
+                elif A.channel_number!=A.broadcast_channel:
+                    if B.data[_A]==alpha__("YmluYXJ5X2ZlZWRiYWNr"):F=ceil(B.data[C][0]/8);G=alpha__("").join(int_to_8_bit_binary(B.data[C][A])for A in range(1,F+1));A._state=STATE_ON if G[A.channel_number-1]==alpha__("MQ==")else STATE_OFF
+                    elif B.data[_A]==alpha__("dXBkYXRlX3Jlc3BvbnNl"):H=B.data[C];I=int(H[A.channel_number]);A._state=STATE_ON if I>0 else STATE_OFF
                 elif B.data[_A]==_D:
                     if int(B.data[_B])==A.channel_number:A._state=STATE_UNKNOWN
             await A.async_update_ha_state(True)
