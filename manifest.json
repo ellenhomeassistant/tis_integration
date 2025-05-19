@@ -8,7 +8,11 @@
   "homekit": {},
   "iot_class": "local_polling",
   "requirements": [
+<<<<<<< HEAD
     "TISControlProtocol==0.7.20",
+=======
+    "TISControlProtocol==0.7.10",
+>>>>>>> 647d05d2bf01a42ec99386076029b74fa9d934e3
     "aiofiles==24.1.0",
     "RPi.GPIO==0.7.1",
     "spidev==3.6",
@@ -16,8 +20,12 @@
     "gpiozero==1.6.2",
     "python-dotenv==1.0.1",
     "cryptography==44.0.1",
+<<<<<<< HEAD
     "psutil==7.0.0",
     "ruamel.yaml==0.18.10"
+=======
+    "psutil==7.0.0"
+>>>>>>> 647d05d2bf01a42ec99386076029b74fa9d934e3
   ],
   "ssdp": [],
   "zeroconf": [],
