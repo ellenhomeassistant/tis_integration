@@ -13,7 +13,7 @@ from.const import DOMAIN
 from TISControlProtocol.api import TISApi
 import asyncio,logging
 async def async_setup_entry(hass,entry,async_add_devices):
-    B=entry.runtime_data.api;A=B.config_entries.get(alpha__("bG9ja19tb2R1bGU="),None)
+    B=entry.runtime_data.api;A=await B.get_entities(platform=alpha__("bG9ja19tb2R1bGU="))
     if A is None:logging.error(alpha__("Tm8gbG9jayBtb2R1bGUgZm91bmQgaW4gdGhlIGNvbmZpZ3VyYXRpb24="));return
     else:async_add_devices([TISControlLock(alpha__("QWRtaW4gTG9jaw=="),A[alpha__("cGFzc3dvcmQ=")])])
 class TISControlLock(LockEntity):
