@@ -38,9 +38,9 @@ async def async_setup_entry(hass,entry,async_add_devices):
             I.extend(C)
     O=CPUTemperatureSensor(A);I.append(O);async_add_devices(I)
 def get_coordinator(hass,tis_api,device_id,gateway,coordinator_type,channel_number):
-    F=tis_api;D=device_id;A=coordinator_type;E=beta__("e19fdmFyMH1fe19fdmFyMX0=", __var0=tuple(D), __var1=A)
+    G=channel_number;F=tis_api;D=device_id;A=coordinator_type;E=beta__("e19fdmFyMH1fe19fdmFyMX0=", __var0=tuple(D), __var1=A)if _A not in A else beta__("e19fdmFyMH1fe19fdmFyMX1fe19fdmFyMn0=", __var0=tuple(D), __var1=A, __var2=G)
     if E not in coordinators:
-        logging.info(alpha__("Y3JlYXRpbmcgbmV3IGNvb3JkaW5hdG9y"));B=TISSensorEntity(D,F,gateway,channel_number)
+        B=TISSensorEntity(D,F,gateway,G)
         if A==_E:C=protocol_handler.generate_temp_sensor_update_packet(entity=B)
         elif A==_F:C=protocol_handler.generate_health_sensor_update_packet(entity=B)
         elif A==_C:C=protocol_handler.generate_update_analog_packet(entity=B)
@@ -105,7 +105,7 @@ class CPUTemperatureSensor(SensorEntity):
     @property
     def name(self):return self._attr_name
 class CoordinatedEnergySensor(BaseSensorEntity,SensorEntity):
-    def __init__(A,hass,tis_api,gateway,name,device_id,channel_number,key=None,sensor_type=_A):D=sensor_type;C=channel_number;B=device_id;E=get_coordinator(hass,tis_api,B,gateway,D,C);super().__init__(E,name,B);A._attr_icon=_H;A.name=name;A.device_id=B;A.channel_number=C;A._attr_unique_id=beta__("ZW5lcmd5X3tfX3ZhcjB9", __var0=A.name);A._key=key;A.sensor_type=D
+    def __init__(A,hass,tis_api,gateway,name,device_id,channel_number,key=None,sensor_type=None):D=sensor_type;C=channel_number;B=device_id;E=get_coordinator(hass,tis_api,B,gateway,D,C);super().__init__(E,name,B);A._attr_icon=_H;A.name=name;A.device_id=B;A.channel_number=C;A._attr_unique_id=beta__("ZW5lcmd5X3tfX3ZhcjB9", __var0=A.name);A._key=key;A.sensor_type=D;A._attr_state_class=alpha__("bWVhc3VyZW1lbnQ=")
     async def async_added_to_hass(A):
         await super().async_added_to_hass()
         @callback
@@ -113,11 +113,13 @@ class CoordinatedEnergySensor(BaseSensorEntity,SensorEntity):
             D=alpha__("ZW5lcmd5");C=alpha__("Y2hhbm5lbF9udW0=");B=event
             try:
                 if B.data[_B]==alpha__("ZW5lcmd5X2ZlZWRiYWNr")and A.sensor_type==_A:
-                    if B.data[C]==A.channel_number:A._state=int(B.data[D].get(A._key,None))
+                    if B.data[C]==A.channel_number:A._state=float(B.data[D].get(A._key,None))
                 elif B.data[_B]==alpha__("bW9udGhseV9lbmVyZ3lfZmVlZGJhY2s=")and A.sensor_type==_D:
                     if B.data[C]==A.channel_number:A._state=B.data[D]
                 A.async_write_ha_state()
             except Exception as E:logging.error(beta__("ZXJyb3IgaW4gc2VsZi5uYW1lOiB7X192YXIwfSwgc2VsZi5fa2V5OiB7X192YXIxfSwgc2VsZi5zZW5zb3JfdHlwZToge19fdmFyMn0=", __var0=A.name, __var1=A._key, __var2=A.sensor_type));logging.error(beta__("ZXZlbnQgZGF0YSBlcnJvciBmb3IgZW5lcmd5IHNlbnNvcjoge19fdmFyMH0gXG4gZXJyb3I6IHtfX3ZhcjF9", __var0=B.data, __var1=E))
         A.hass.bus.async_listen(str(A.device_id),B)
     def _update_state(A,data):0
+    @property
+    def native_value(self):return self.state
 RELEVANT_TYPES={alpha__("bHV4X3NlbnNvcg=="):CoordinatedLUXSensor,alpha__("dGVtcGVyYXR1cmVfc2Vuc29y"):CoordinatedTemperatureSensor,_C:CoordinatedAnalogSensor,_A:CoordinatedEnergySensor}
