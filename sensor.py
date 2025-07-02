@@ -11,7 +11,7 @@ _C=None
 _B=alpha__("ZmVlZGJhY2tfdHlwZQ==")
 _A=alpha__("ZW5lcmd5X3NlbnNvcg==")
 from datetime import timedelta
-import logging
+import logging,json
 from gpiozero import CPUTemperature
 from TISControlProtocol.api import TISApi
 from TISControlProtocol.Protocols.udp.ProtocolHandler import TISProtocolHandler
@@ -31,15 +31,15 @@ async def async_setup_entry(hass,entry,async_add_devices):
     for(J,D)in RELEVANT_TYPES.items():
         K=await A.get_entities(platform=J)
         if K and len(K)>0:
-            L=[(C,next(iter(A[alpha__("Y2hhbm5lbHM=")][0].values())),A[alpha__("ZGV2aWNlX2lk")],A[alpha__("aXNfcHJvdGVjdGVk")],A[alpha__("Z2F0ZXdheQ==")],A[alpha__("bWlu")],A[alpha__("bWF4")])for B in K for(C,A)in B.items()];C=[]
-            for(E,F,G,P,H,min,max)in L:
-                if J==_D:C.append(D(hass=B,tis_api=A,gateway=H,name=E,device_id=G,channel_number=F,min=min,max=max))
+            L=[(C,next(iter(A[alpha__("Y2hhbm5lbHM=")][0].values())),A[alpha__("ZGV2aWNlX2lk")],A[alpha__("aXNfcHJvdGVjdGVk")],A[alpha__("Z2F0ZXdheQ==")],A[alpha__("bWlu")],A[alpha__("bWF4")],A[alpha__("c2V0dGluZ3M=")])for B in K for(C,A)in B.items()];C=[]
+            for(E,F,G,Q,H,min,max,M)in L:
+                if J==_D:C.append(D(hass=B,tis_api=A,gateway=H,name=E,device_id=G,channel_number=F,min=min,max=max,settings=M))
                 elif J==_A:
-                    for(M,N)in ENERGY_SENSOR_TYPES.items():C.append(D(hass=B,tis_api=A,gateway=H,name=beta__("e19fdmFyMH0ge19fdmFyMX0=", __var0=N, __var1=E),device_id=G,channel_number=F,key=M,sensor_type=_A))
+                    for(N,O)in ENERGY_SENSOR_TYPES.items():C.append(D(hass=B,tis_api=A,gateway=H,name=beta__("e19fdmFyMH0ge19fdmFyMX0=", __var0=O, __var1=E),device_id=G,channel_number=F,key=N,sensor_type=_A))
                     C.append(D(hass=B,tis_api=A,gateway=H,name=beta__("TW9udGhseSBFbmVyZ3kge19fdmFyMH0=", __var0=E),device_id=G,channel_number=F,sensor_type=_E));C.append(D(hass=B,tis_api=A,gateway=H,name=beta__("QmlsbCB7X192YXIwfQ==", __var0=E),device_id=G,channel_number=F,sensor_type=_F))
                 else:C.append(D(hass=B,tis_api=A,gateway=H,name=E,device_id=G,channel_number=F))
             I.extend(C)
-    O=CPUTemperatureSensor(B);I.append(O);async_add_devices(I)
+    P=CPUTemperatureSensor(B);I.append(P);async_add_devices(I)
 def get_coordinator(hass,tis_api,device_id,gateway,coordinator_type,channel_number):
     G=channel_number;F=tis_api;D=device_id;A=coordinator_type;E=beta__("e19fdmFyMH1fe19fdmFyMX0=", __var0=tuple(D), __var1=A)if _A not in A else beta__("e19fdmFyMH1fe19fdmFyMX1fe19fdmFyMn0=", __var0=tuple(D), __var1=A, __var2=G)
     if E not in coordinators:
@@ -84,17 +84,19 @@ class CoordinatedLUXSensor(BaseSensorEntity,SensorEntity):
         A.hass.bus.async_listen(str(A.device_id),B)
     def _update_state(A,data):0
 class CoordinatedAnalogSensor(BaseSensorEntity,SensorEntity):
-    def __init__(A,hass,tis_api,gateway,name,device_id,channel_number,min=0,max=100):C=channel_number;B=device_id;D=get_coordinator(hass,tis_api,B,gateway,_D,C);super().__init__(D,name,B);A._attr_icon=_J;A.name=name;A.device_id=B;A.channel_number=C;A.min=min;A.max=max;A._attr_unique_id=beta__("c2Vuc29yX3tfX3ZhcjB9", __var0=A.name)
+    def __init__(A,hass,tis_api,gateway,name,device_id,channel_number,min=0,max=100,settings=_C):
+        D=channel_number;C=device_id;B=settings;E=get_coordinator(hass,tis_api,C,gateway,_D,D);super().__init__(E,name,C);A._attr_icon=_J;A.name=name;A.device_id=C;A.channel_number=D;A.min=min;A.max=max;A._attr_unique_id=beta__("c2Vuc29yX3tfX3ZhcjB9", __var0=A.name)
+        if B:B=json.loads(B);A.min_capacity=int(B.get(alpha__("bWluX2NhcGFjaXR5"),0));A.max_capacity=int(B.get(alpha__("bWF4X2NhcGFjaXR5"),100))
+        else:raise ValueError(alpha__("bWluIGFuZCBtYXggY2FwYWNpdHkgdmFsdWVzIGFyZSByZXF1aXJlZCBmb3IgYW5hbG9nIHNlbnNvcnM="))
     async def async_added_to_hass(A):
         await super().async_added_to_hass()
         @callback
         def B(event):
-            C=event
+            B=event
             try:
-                if C.data[_B]==alpha__("YW5hbG9nX2ZlZWRiYWNr"):D=int(C.data[alpha__("YW5hbG9n")][A.channel_number-1]);B=(D-A.min)/(A.max-A.min);B=max(0,min(1,B));A._state=int(B*100)
+                if B.data[_B]==alpha__("YW5hbG9nX2ZlZWRiYWNr"):D=int(B.data[alpha__("YW5hbG9n")][A.channel_number-1]);C=(D-A.min)/(A.max-A.min);C=max(0,min(1,C));A._state=int(A.min_capacity+(A.max_capacity-A.min_capacity)*C)
                 A.async_write_ha_state()
-            except Exception as E:logging.error(beta__("ZXZlbnQgZGF0YSBlcnJvciBmb3IgYW5hbG9nIHNlbnNvcjoge19fdmFyMH0gXG4gZXJyb3I6IHtfX3ZhcjF9", __var0=C.data, __var1=E))
-            B=(D-A.min)/(A.max-A.min);B=max(0,min(1,B));return int(B*100)
+            except Exception as E:logging.error(beta__("ZXZlbnQgZGF0YSBlcnJvciBmb3IgYW5hbG9nIHNlbnNvcjoge19fdmFyMH0gXG4gZXJyb3I6IHtfX3ZhcjF9", __var0=B.data, __var1=E))
         A.hass.bus.async_listen(str(A.device_id),B)
     def _update_state(A,data):0
 class CPUTemperatureSensor(SensorEntity):
