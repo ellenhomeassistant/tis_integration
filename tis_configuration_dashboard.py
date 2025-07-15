@@ -30,9 +30,9 @@ def create():
                 'title': 'TIS Configuration',
                 'icon': 'mdi:tune',
                 'show_in_sidebar': True,
-                'filename': dashboard_filename
+                'filename': dashboard_filename,
+                'require_admin': True
             }
-
 
         # 3. Save configuration.yaml
         with open(config_path, 'w') as f:
