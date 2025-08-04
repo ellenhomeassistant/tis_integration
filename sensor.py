@@ -94,7 +94,7 @@ class CoordinatedAnalogSensor(BaseSensorEntity,SensorEntity):
         def B(event):
             B=event
             try:
-                if B.data[_B]==alpha__("YW5hbG9nX2ZlZWRiYWNr"):D=int(B.data[alpha__("YW5hbG9n")][A.channel_number-1]);C=(D-A.min)/(A.max-A.min);C=max(0,min(1,C));A._state=int(A.min_capacity+(A.max_capacity-A.min_capacity)*C)
+                if B.data[_B]==alpha__("YW5hbG9nX2ZlZWRiYWNr"):D=float(B.data[alpha__("YW5hbG9n")][A.channel_number-1]);C=(D-A.min)/(A.max-A.min);C=max(0,min(1,C));A._state=A.min_capacity+(A.max_capacity-A.min_capacity)*C
                 A.async_write_ha_state()
             except Exception as E:logging.error(beta__("ZXZlbnQgZGF0YSBlcnJvciBmb3IgYW5hbG9nIHNlbnNvcjoge19fdmFyMH0gXG4gZXJyb3I6IHtfX3ZhcjF9", __var0=B.data, __var1=E))
         A.hass.bus.async_listen(str(A.device_id),B)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from TISControlProtocol import *
+_D=alpha__("ZGV2aWNlX2lk")
 _C=alpha__("dmFjYXRpb24=")
 _B=alpha__("ZGlzYXJt")
 _A=None
@@ -16,7 +17,7 @@ SECURITY_FEEDBACK_OPTIONS={1:_C,2:alpha__("YXdheQ=="),3:alpha__("bmlnaHQ="),6:_B
 handler=TISProtocolHandler()
 async def async_setup_entry(hass,entry,async_add_devices):
     A=entry.runtime_data.api;B=await A.get_entities(platform=alpha__("c2VjdXJpdHk="))
-    if B:C=[(C,next(iter(A[alpha__("Y2hhbm5lbHM=")][0].values())),A[alpha__("ZGV2aWNlX2lk")],A[alpha__("Z2F0ZXdheQ==")])for B in B for(C,A)in B.items()];D=[TISSecurity(api=A,name=B,options=list(SECURITY_OPTIONS.keys()),initial_option=_B,channel_number=C,device_id=D,gateway=E)for(B,C,D,E)in C];async_add_devices(D)
+    if B:C=[(C,next(iter(A[alpha__("Y2hhbm5lbHM=")][0].values())),A[_D],A[alpha__("Z2F0ZXdheQ==")])for B in B for(C,A)in B.items()];D=[TISSecurity(api=A,name=B,options=list(SECURITY_OPTIONS.keys()),initial_option=_B,channel_number=C,device_id=D,gateway=E)for(B,C,D,E)in C];async_add_devices(D)
 protocol_handler=TISProtocolHandler()
 class TISSecurity(SelectEntity):
     def __init__(A,api,name,options,initial_option,channel_number,device_id,gateway):A._name=name;A.api=api;A.unique_id=beta__("c2VsZWN0X3tfX3ZhcjB9", __var0=A.name);A._attr_options=options;A._attr_current_option=A._state=initial_option;A._attr_icon=alpha__("bWRpOnNoaWVsZA==");A._attr_is_protected=True;A._attr_read_only=True;A._listener=_A;A.channel_number=int(channel_number);A.device_id=device_id;A.gateway=gateway;A.update_packet=protocol_handler.generate_update_security_packet(A)
@@ -30,7 +31,7 @@ class TISSecurity(SelectEntity):
                 else:A.unprotect()
             if B.data.get(E)==alpha__("c2VjdXJpdHlfZmVlZGJhY2s=")or B.data.get(E)==alpha__("c2VjdXJpdHlfdXBkYXRl"):
                 logging.info(beta__("c2VjdXJpdHkgZmVlZGJhY2sgZXZlbnQ6IHtfX3ZhcjB9", __var0=B.data))
-                if A.channel_number==B.data[alpha__("Y2hhbm5lbF9udW1iZXI=")]:
+                if A.channel_number==B.data[alpha__("Y2hhbm5lbF9udW1iZXI=")]and A.device_id==B.data[_D]:
                     C=B.data[alpha__("bW9kZQ==")]
                     if C in SECURITY_FEEDBACK_OPTIONS:D=SECURITY_FEEDBACK_OPTIONS[C];logging.info(beta__("bW9kZToge19fdmFyMH0sIG9wdGlvbjoge19fdmFyMX0=", __var0=C, __var1=D));A._state=A._attr_current_option=D
             A.async_write_ha_state()

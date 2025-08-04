@@ -12,7 +12,7 @@ from.import tis_configuration_dashboard
 import aiofiles,ruamel.yaml,io
 @dataclass
 class TISData:api:TISApi
-PLATFORMS=[Platform.LIGHT,Platform.SENSOR,Platform.BINARY_SENSOR,Platform.SWITCH,Platform.COVER,Platform.CLIMATE,Platform.SELECT,Platform.LOCK,Platform.FAN]
+PLATFORMS=[Platform.LIGHT,Platform.SENSOR,Platform.BINARY_SENSOR,Platform.SWITCH,Platform.COVER,Platform.CLIMATE,Platform.SELECT,Platform.LOCK,Platform.FAN,Platform.BUTTON]
 type TISConfigEntry=ConfigEntry[TISData]
 protocol_handler=TISProtocolHandler()
 async def async_setup_entry(hass,entry):
